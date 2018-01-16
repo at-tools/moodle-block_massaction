@@ -5,7 +5,7 @@
 .block-massaction-select > ul,
 .block-massaction-action > ul,
 .block-massaction-operation > ul {
-    list-style-type: none;
+    list-style-type: none !important;
 }
 
 .block-massaction-action a .icon {
