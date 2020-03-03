@@ -288,7 +288,7 @@ function perform_deletion($modules, $returnurl) {
             print_error('modulemissingcode', '', '', $modlib);
         }
 
-        course_delete_module($cm->id);
+        course_delete_module($cm->id, true);
     }
 
     redirect($returnurl);
