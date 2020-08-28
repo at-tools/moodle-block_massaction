@@ -76,7 +76,11 @@ define(['jquery', 'core/str'], function($, corestr) {
                      * to them later.
                      */
                     jQueryIdentifier = sectionId + ' ul.section li.activity ' + 'div.mod-indent-outer div';
+
                     courseActivities = $('#section-' + jQueryIdentifier).children('span.actions');
+                    if (!courseActivities.length) {
+                        courseActivities = $('#section-' + jQueryIdentifier).children('div.actions');
+                    }
 
                     for (moduleKey in data.sectionmodules[sectionId]) {
                         moduleId = data.sectionmodules[sectionId][moduleKey];
