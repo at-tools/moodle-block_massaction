@@ -58,7 +58,7 @@ $modulerecords = $DB->get_records_select('course_modules', 'ID IN (' .
 
 // Keep track of courses to rebuild cache.
 $rebuildcourses = array();
-
+$originalorder = array();
 foreach ($activities as $activityid) {
     if (!isset($modulerecords[$activityid])) {
         print_error('invalidmoduleid', 'block_massaction', $activityid);
@@ -66,8 +66,11 @@ foreach ($activities as $activityid) {
         if (!array_key_exists($modulerecords[$activityid]->course, $rebuildcourses)) {
             $rebuildcourses[$modulerecords[$activityid]->course] = true;
         }
+        $originalorder[] = $modulerecords[$activityid];
     }
 }
+
+$modulerecords = $originalorder; // Reset original order.
 
 if (!isset($action)) {
     print_error('noaction', 'block_massaction');
