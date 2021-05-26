@@ -80,9 +80,10 @@ switch ($action) {
         adjust_indentation($modulerecords, $action == 'outdent' ? -1 : 1, $context);
         break;
 
-    case 'hide':
+    case 'hide1':
+    case 'hide2':
     case 'show':
-        set_visibility($modulerecords, $action == 'show', $context);
+        set_visibility($modulerecords, $action, $context);
         break;
 
     case 'delete':
@@ -166,16 +167,24 @@ function adjust_indentation($modules, $amount, $context) {
  *
  * @return void
  */
-function set_visibility($modules, $visible, $context) {
-    global $CFG;
+function set_visibility($modules, $action, $context) {
+   global $CFG;
+   $avail = 1;
+   $visible = 1;
+   if ($action != 'show') {
+       $visible = 0;
+       $avail = 0;
+       if ($action == 'hide2') {
+           $avail = 1;
+           $visible = 0;
+       }
+   }
 
-    require_capability('moodle/course:activityvisibility', $context);
+   require_once($CFG->dirroot.'/course/lib.php');
 
-    require_once($CFG->dirroot.'/course/lib.php');
-
-    foreach ($modules as $cm) {
-        set_coursemodule_visible($cm->id, $visible);
-    }
+   foreach ($modules as $cm) {
+       set_coursemodule_visible($cm->id, $avail, $visible);
+   }
 }
 
 /**
